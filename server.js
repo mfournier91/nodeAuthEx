@@ -24,6 +24,22 @@ app.get('/', function(req, res){
   res.send('Hello! The API is at https://localhost:' + port + '/api');
 });
 
+//sample User
+app.get('/setup', function(req,res){
+  var marc = new User({
+    name: 'Marc',
+    password: 'password',
+    admin: true
+  });
+
+  marc.save(function(err){
+    if (err) throw err;
+
+    console.log('User saved successfully');
+    res.json({success: true});
+  });
+});
+
 
 //API routes
 
