@@ -47,6 +47,37 @@ app.get('/setup', function(req,res){
 var apiRoutes = express.Router();
 
 //To do: route to authenticate a user (POST http://localhost:8080/api/authenticate)
+apiRoutes.post('/authenticate', function(req, res){
+
+  //find the user
+  User.findOne({
+    name: req.body.name
+  }, function(err, user){
+    if (err) throw err;
+
+    if (!user){
+      res.json({success: false, message: 'Authentication failed. User not found'});
+    } else if (user) {
+      //check password
+      if (user.password != req.body.password) {
+        res.json({success: false, message: 'Authentication failed. Wrong password'});
+      } else {
+        //user is found and password is correct
+        //create a token
+        var token = jwt.sign(user, app.get('superSecret'), {
+          expiresIn: 60*60*24 //24 hours
+        });
+
+        res.json({
+          success: true,
+          message: 'Enjoy your token!',
+          token: token
+        });
+      }
+    }
+
+  });
+});
 
 //To do: route middleware to verify a token
 
