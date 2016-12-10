@@ -41,7 +41,31 @@ app.get('/setup', function(req,res){
 });
 
 
-//API routes
+//API ROUTES
+
+//get an instance of the router
+var apiRoutes = express.Router();
+
+//To do: route to authenticate a user (POST http://localhost:8080/api/authenticate)
+
+//To do: route middleware to verify a token
+
+//route to show a message (GET http://localhost:8080/api/)
+apiRoutes.get('/', function(req,res){
+  res.json({message: "Don't go JSON Waterfalls"});
+});
+
+// route to return all users (GET http://localhost:8080/api/users)
+apiRoutes.get('/users', function(req, res){
+  User.find({}, function(err, users) {
+    res.json(users);
+  });
+});
+
+//apply the routes tou our application with the prefix /api
+app.use('/api', apiRoutes);
+
+
 
 //start the server
 app.listen(port);

@@ -1,4 +1,4 @@
 module.exports = {
   'secret': 'ilovescotchyscotch',
-  'database': 'mongodb://localhost/nodetodo'
+  'database': 'mongodb://localhost/nodeAuthExample'
 }
